@@ -33,12 +33,12 @@ int	read_cfg(int fd, t_n *n)
 	char	*line;
 
 	if (!tmp)
-		return (close_n("Couldn't alloc tmp in read_cfg 1\n", n), 1);
+		return (close_n("Couldn't alloc tmp in read_cfg\n", n), 1);
 	while (line = get_next_line(fd))
 	{
 		tmp = n_strjoin(tmp, line);
 		if (!tmp)
-			return (close_n("Couldn't alloc tmp in read_cfg 2\n", n), 1);
+			return (close_n("Couldn't alloc tmp in read_cfg\n", n), 1);
 		free (line);
 		n->cfg_lines++;
 	}
