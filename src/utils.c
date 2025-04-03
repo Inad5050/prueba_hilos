@@ -99,6 +99,8 @@ static char	**affect(char const *s, char **dst, char c, int l)
 	return (dst);
 }
 
+//get_next_line
+
 char	**ft_split(char const *s, char c)
 {
 	char	**dst;
@@ -113,104 +115,48 @@ char	**ft_split(char const *s, char c)
 	return (affect(s, dst, c, l));
 }
 
-//get_next_line
-
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 42
-# endif
-
-char	*ft_get_next_line(int fd)
+char	*ft_strdup(char *str)
 {
-	static char	*line;
-	char		buffer[BUFFER_SIZE +1];
-	int			readbytes;
-	char		*return_line;
-
-	if (fd < 0 || BUFFER_SIZE <= 0)
-		return (NULL);
-	readbytes = 1;
-	while (!strchr(line, '\n') && readbytes > 0)
-	{
-		readbytes = read(fd, buffer, BUFFER_SIZE);
-		if (readbytes == -1)
-			return (NULL);
-		buffer[readbytes] = '\0';
-		line = gnl_strjoin(line, buffer);
-		if (!line)
-			return (NULL);
-	}
-	return_line = gnl_cut_line(line);
-	line = gnl_excess(line);
-	return (return_line);
-}
-
-char	*gnl_cut_line(char *line)
-{
-	char	*return_line;
-	int		i;
-	int		j;
-
-	i = 0;
-	if (!line[0])
-		return (NULL);
-	while (line[i] && line[i] != '\n')
+	int	i = 0;
+	
+	while (str[i])
 		i++;
-	return_line = calloc(i + 2, sizeof(char));
-	if (!return_line)
-		return (NULL);
-	j = -1;
-	while (++j <= i)
-		return_line[j] = line[j];
-	if (line[i] == '\n')
-		return_line[++i] = '\0';
-	return (return_line);
-}
-
-char	*gnl_excess(char *line)
-{
-	char	*excess;
-	int		j;
-	int		i;
-
+	char	*dup = malloc((i + 1) * sizeof(char));
 	i = 0;
-	j = 0;
-	while (line[i] != '\0' && line[i] != '\n')
+	while (str[i])
+	{
+		dup[i] = str[i];
 		i++;
-	if (!line[i])
-		return (free (line), NULL);
-	excess = calloc(strlen(line) - i + 1, sizeof(char));
-	if (!excess)
-		return (NULL);
-	while (line[i])
-		excess[j++] = line[++i];
-	excess[j] = '\0';
-	free(line);
-	return (excess);
+	}
+	dup[i] = '\0';
+	return (dup);
 }
 
-char	*gnl_strjoin(char *line, const char *buffer)
+char	*get_next_line(int	fd)
 {
-	int		i;
-	int		j;
-	char	*str;
+	static char	buffer[42000];
+	static int buffer_index;
+	static int buffer_readed;
+	char	line[70000];
+	int	i = 0;
 
-	if (!line)
+	if (fd < 0 || 42 <= 0)
+		return (NULL);
+	while (1)
 	{
-		line = (char *)calloc(1, sizeof(char));
-		line[0] = '\0';
+		if (buffer_index >= buffer_readed)
+		{
+			buffer_readed = read(fd, buffer, 42);
+			buffer_index = 0;
+			if (buffer_readed <= 0)
+				break ;
+		}
+		line[i++] = buffer[buffer_index++];
+		if (line[i - 1] == '\n')
+			break ;
 	}
-	if (!line || !buffer)
+	line[i] = '\0';
+	if (i == 0)
 		return (NULL);
-	str = calloc((strlen(line) + strlen(buffer) + 1), sizeof(char));
-	if (!str)
-		return (NULL);
-	i = -1;
-	j = 0;
-	while (line[++i])
-		str[i] = line[i];
-	while (buffer[j])
-		str[i++] = buffer[j++];
-	str[strlen(line) + strlen(buffer)] = '\0';
-	free (line);
-	return (str);
+	return (ft_strdup(line));
 }

@@ -17,7 +17,6 @@ typedef struct s_nemergent
 
 //parsing
 int			parsing(int argc, char **argv, t_n *n);
-int			parse_cfg_file(char *file, int fd, t_n *n);
 int			read_cfg(int fd, t_n *n);
 int			parse_cfg_content(t_n *n);
 
@@ -32,9 +31,10 @@ static int	numchar(char const *s2, char c, int i);
 static char	**freee(char const **dst, int j);
 static char	**affect(char const *s, char **dst, char c, int l);
 char		**ft_split(char const *s, char c);
-char		*ft_get_next_line(int fd);
+/* char		*ft_get_next_line(int fd);
 char		*gnl_cut_line(char *line);
 char		*gnl_excess(char *line);
-char		*gnl_strjoin(char *line, const char *buffer);
+char		*gnl_strjoin(char *line, const char *buffer); */
+char		*get_next_line(int	fd);
 
 #endif
