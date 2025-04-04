@@ -1,4 +1,4 @@
-NAME = nemergent
+NAME = nem
 CC = gcc
 CCFLAGS = -Wall -Wextra -Werror
 

@@ -1,4 +1,4 @@
-#include "../include/nemergent.h"
+#include "../include/nem.h"
 
 char	*n_strjoin(char *s1, const char *s2)
 {

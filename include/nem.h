@@ -26,23 +26,22 @@ typedef struct s_odd
 
 typedef struct s_thread
 {
+	unsigned int		thread_index;
 	pthread_t			pthread;
 	long int			*all_numbers;
 	long int			*odd_numbers;
 	int					odd_index;
 	long int			*even_numbers;
 	int					even_index;
-	struct s_nemergent	*n;
+	struct s_nem		*n;
 } t_thread;
 
-typedef struct s_nemergent
+typedef struct s_nem
 {
 	long int	nmb_per_th;
 	long int	th_num;
-
 	char		**cfg_file;
 	int			cfg_lines;
-
 	t_even		*s_even;
 	t_odd		*s_odd;
 	t_thread	**threads;
@@ -60,6 +59,7 @@ int			init_thread(t_thread *t, t_n *n);
 
 //main
 void		print_result(t_n *n);
+void		sort_numbers(t_n *n);
 
 //parsing
 int			parsing(int argc, char **argv, t_n *n);
@@ -69,7 +69,7 @@ int			parse_cfg_content(t_n *n);
 //threads
 int			threads(t_n *n);
 void		*f_thread(void *struct_ptr);
-void		is_it_repeated(long int *nmb, t_thread *t, unsigned int seed);
+void		is_it_repeated(int i, t_thread *t);
 
 //utils
 char		*n_strjoin(char *s1, const char *s2);

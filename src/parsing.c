@@ -1,4 +1,4 @@
-#include "../include/nemergent.h"
+#include "../include/nem.h"
 
 int	parsing(int argc, char **argv, t_n *n)
 {

@@ -1,2 +1,0 @@
-numbers_per_thread = 4
-thread_num = 4

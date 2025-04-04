@@ -1,4 +1,4 @@
-#include "../include/nemergent.h"
+#include "../include/nem.h"
 
 void	close_n(char *str, t_n *n)
 {
@@ -34,6 +34,7 @@ void	free_memory(t_n *n)
 	{
 		for (int i = 0; i < n->th_num; i++)
 			free_thread(n->threads[i]);
+		free(n->threads);
 	}
 	free(n);
 	exit(1);
