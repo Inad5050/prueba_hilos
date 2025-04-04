@@ -1,6 +1,7 @@
 In order to create the executable, run make.
 
 This program requires a configurable *.txt file in the following format:
+
 numbers_per_thread = number
 thread_num = number
 
